@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F12E2FAC24630807006C69D9 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12E2FAB24630807006C69D9 /* Converter.swift */; };
 		F14FBC0024624DB90048C119 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14FBBFF24624DB90048C119 /* AppDelegate.swift */; };
 		F14FBC0224624DB90048C119 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14FBC0124624DB90048C119 /* SceneDelegate.swift */; };
 		F14FBC0424624DB90048C119 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14FBC0324624DB90048C119 /* ContentView.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F12E2FAB24630807006C69D9 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
 		F14FBBFC24624DB90048C119 /* Temperature_conversion.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Temperature_conversion.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F14FBBFF24624DB90048C119 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F14FBC0124624DB90048C119 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				F14FBBFF24624DB90048C119 /* AppDelegate.swift */,
 				F14FBC0124624DB90048C119 /* SceneDelegate.swift */,
 				F14FBC0324624DB90048C119 /* ContentView.swift */,
+				F12E2FAB24630807006C69D9 /* Converter.swift */,
 				F14FBC0524624DBC0048C119 /* Assets.xcassets */,
 				F14FBC0A24624DBC0048C119 /* LaunchScreen.storyboard */,
 				F14FBC0D24624DBC0048C119 /* Info.plist */,
@@ -148,6 +151,7 @@
 			files = (
 				F14FBC0024624DB90048C119 /* AppDelegate.swift in Sources */,
 				F14FBC0224624DB90048C119 /* SceneDelegate.swift in Sources */,
+				F12E2FAC24630807006C69D9 /* Converter.swift in Sources */,
 				F14FBC0424624DB90048C119 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
