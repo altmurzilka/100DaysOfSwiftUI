@@ -3,7 +3,7 @@ import Foundation
 struct Converter {
     func conversion(from first: Measurement<Dimension>, to second: Dimension, numberOfDecimals: Int = 2) -> String {
         let result = first.converted(to: second)
-        return String(format: "%.\(numberOfDecimals)f [%@]", result.value, result.unit.symbol)
+        return String(format: "%.\(numberOfDecimals)f", result.value, result.unit.symbol)
     }
     
     static func dimension(for type: String) -> Dimension? {
