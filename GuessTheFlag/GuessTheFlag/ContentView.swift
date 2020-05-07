@@ -18,6 +18,11 @@ struct ContentView: View {
     @State private var score = 0  // 1
     @State private var scoreMessage = ""
     
+    @State private var opacity = 1.0
+    
+    @State private var popIn = false
+    @State private var popOut = false
+    
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
@@ -39,6 +44,9 @@ struct ContentView: View {
                 }
                 ForEach(0..<3) { number in
                     Button(action: {
+                        withAnimation {
+                            self.opacity -= 0.2
+                        }
                         self.flagTapped(number)
                     }) {
                         Image(self.countries[number])
@@ -51,7 +59,7 @@ struct ContentView: View {
                 
                 Spacer()
                 VStack (alignment: .center){
-                    Text("\(score)")// 2
+                    Text("\(score)") // 2
                         .foregroundColor(.white)
                         .font(.title)
                         .fontWeight(.black)
@@ -78,7 +86,7 @@ struct ContentView: View {
         } else {
             scoreTitle = "Wrong"
             score -= 1
-            scoreMessage = "Wrong! That’s the flag of \(countries[number])"
+            scoreMessage = "Wrong! That’s the flag of \(countries[number])" // 3
         }
         
         showingScore = true
