@@ -16,22 +16,26 @@ struct ContentView: View {
     @State private var scoreTitle = ""
     
     @State private var score = 0  // 1
-    @State private var scoreMsg = ""
+    @State private var scoreMessage = ""
     
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
             VStack (spacing: 30) {
+                Spacer()
                 VStack {
-                    Text("Tap the flag of")
-                        .foregroundColor(.white)
-                        .font(.title)
-                        .fontWeight(.black)
-                    Text(countries[correctAnswer])
-                        .foregroundColor(.white)
-                        .font(.largeTitle)
-                        .fontWeight(.black)
+                    VStack {
+                        Text("Tap the flag of")
+                            .foregroundColor(.white)
+                            .font(.title)
+                            .fontWeight(.black)
+                        Text(countries[correctAnswer])
+                            .foregroundColor(.white)
+                            .font(.largeTitle)
+                            .fontWeight(.black)
+                            .padding()
+                    }
                 }
                 ForEach(0..<3) { number in
                     Button(action: {
@@ -40,16 +44,28 @@ struct ContentView: View {
                         Image(self.countries[number])
                             .renderingMode(.original)
                             .clipShape(Capsule())
-                            .overlay(Capsule().stroke(Color.black, lineWidth: 1))
+                            .overlay(Capsule().stroke(Color.white, lineWidth: 5))
                             .shadow(color: .black, radius: 2)
                     }
                 }
+                
                 Spacer()
-                Text("User current score is: \(score)")  // 2
+                VStack (alignment: .center){
+                    Text("\(score)")// 2
+                        .foregroundColor(.white)
+                        .font(.title)
+                        .fontWeight(.black)
+                        .padding()
+                    Text("Current score")
+                        .foregroundColor(.white)
+                        .font(.title)
+                        .fontWeight(.black)
+                }
+                Spacer()
             }
         }
         .alert(isPresented: $showingScore) {
-            Alert(title: Text(scoreTitle), message: Text("Your score is ???"), dismissButton: .default(Text("Continue")) {
+            Alert(title: Text(scoreTitle), message: Text(scoreMessage), dismissButton: .default(Text("Continue")) {
                 self.askQuestion()
                 })
         }
@@ -57,8 +73,12 @@ struct ContentView: View {
     func flagTapped(_ number: Int) {
         if number == correctAnswer {
             scoreTitle = "Correct"
+            score += 1
+            scoreMessage = "Your score is: \(score)"
         } else {
             scoreTitle = "Wrong"
+            score -= 1
+            scoreMessage = "Wrong! That’s the flag of \(countries[number])"
         }
         
         showingScore = true
