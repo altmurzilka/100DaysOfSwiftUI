@@ -12,6 +12,7 @@ struct ContentView: View {
     @State private var checkAmount = ""
     @State private var numberOfPeople = ""
     @State private var tipPercentage = 2
+    @State private var useRedText = false // day 24 challenge 2
     
     let tipPercentages = [10, 15, 20, 25, 0]
     
@@ -23,7 +24,7 @@ struct ContentView: View {
         let tipValue = orderAmount / 100 * tipSelection
         let grandTotal = orderAmount + tipValue
         let amountPerPerson = grandTotal / peopleCount
-
+        
         return amountPerPerson
     }
     
@@ -33,9 +34,19 @@ struct ContentView: View {
         
         let tipValue = orderAmount / 100 * tipSelection
         let grandTotal = orderAmount + tipValue
-
+        
         return grandTotal
     }
+    var trick: Double {
+        let orderAmount = Double(checkAmount) ?? 0
+        return orderAmount
+    }
+    
+    var trick2{
+        if trick == totalAmount {
+        self.useRedText.toggle()
+    }
+    
     
     var body: some View {
         NavigationView {
@@ -66,6 +77,7 @@ struct ContentView: View {
                 
                 Section(header: Text("Total amount")){
                     Text("$\(totalAmount, specifier: "%.2f")") // 2
+                        .foregroundColor(self.useRedText ? .red : .black)
                 }
             }
             .navigationBarTitle("WeSplit", displayMode: .inline)
