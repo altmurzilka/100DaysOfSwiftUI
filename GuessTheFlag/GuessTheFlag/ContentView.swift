@@ -23,6 +23,18 @@ struct ContentView: View {
     @State private var popIn = false
     @State private var popOut = false
     
+    struct FlagImage: View { // day 24 
+        var text: String
+
+        var body: some View {
+            Image(text)
+                .renderingMode(.original)
+                .clipShape(Capsule())
+                .overlay(Capsule().stroke(Color.white, lineWidth: 5))
+                .shadow(color: .black, radius: 2)
+        }
+    }
+    
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [.blue, .black]), startPoint: .top, endPoint: .bottom)
@@ -49,11 +61,7 @@ struct ContentView: View {
                         }
                         self.flagTapped(number)
                     }) {
-                        Image(self.countries[number])
-                            .renderingMode(.original)
-                            .clipShape(Capsule())
-                            .overlay(Capsule().stroke(Color.white, lineWidth: 5))
-                            .shadow(color: .black, radius: 2)
+                        FlagImage(text: self.countries[number])
                     }
                 }
                 
