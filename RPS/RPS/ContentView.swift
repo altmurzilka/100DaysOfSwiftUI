@@ -21,19 +21,17 @@ struct ContentView: View {
     @State private var score = 0
     @State private var round = 1
     
-    let rounds = 10
-    
     var body: some View {
         
         VStack {
             VStack(spacing: 20) {
                 HStack {
-                    Text("Score \(score)")
+                    Text("Score: \(score)")
                     Spacer()
-                    Text("Round \(round)/\(rounds)")
+                    Text("Round \(round)/10)")
                 }.padding(50)
                 Text("Now you need to: ")
-                Text(winOrLoose ? "⭐️WIN⭐️" : "❗️LOSE❗️")
+                Text(winOrLoose ? "WIN" : "LOSE")
                 Text("Against:")
                 Text(moves[randomMove])
                     .font(.system(size: 80))
@@ -49,15 +47,15 @@ struct ContentView: View {
                     }
                 }
                 .alert(isPresented: $showingAlert) {
-                    Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text(round > 10 ? "Restart" : "Continue")) {
-                        self.restartGame()
-                        })
+                    Alert(title: Text("Game over"),
+                          message: Text("You scored \(score) points!"),
+                          dismissButton: .default(Text("Restart game"), action: restartGame))
                 }
             }
         }
     }
     
-    private func restartGame() {
+    func restartGame() {
         round = 1
         randomMove = Int.random(in: 0 ... 2)
         winOrLoose = Bool.random()
@@ -65,22 +63,30 @@ struct ContentView: View {
     }
     
     
-    func buttonTapped(_ number: Int) {
-        if randomMove == number {
-            alertTitle = "It's a Tie!"
-            alertMessage = "You score 0 points."
-        } else if (randomMove == 0 && number == 1 && winOrLoose == true) || (randomMove == 1 && number == 2 && winOrLoose == true) || (randomMove == 2 && number == 0 && winOrLoose == true) {
+    func selectMove(at index: Int) {
+        showingAlert = round >= 10
+        let userSelection = moves[index]
+        let gameSelection = moves[randomMove]
+        switch (userSelection.wins(against: gameSelection), winOrLoose) {
+        case (true, true), (false, false):
             score += 1
-          //  alertTitle = "You Win!"
-           // alertMessage = "You score 1 point."
-        } else if (randomMove == 0 && number == 2 && winOrLoose == false) || (randomMove == 1 && number == 0 && winOrLoose == false) || (randomMove == 2 && number == 1 && winOrLoose == false) {
+        default:
+            score -= 1
+        }
+        
+        randomMove = Int.random(in: 0 ... 2)
+        winOrLoose = Bool.random()
+        round += 1
+    }
+    
+    func buttonTapped(at index: Int) {
+        if randomMove == index {
+        } else if (randomMove == 0 && number == 1 && playerShouldWin == true) || (randomMove == 1 && number == 2 && playerShouldWin == true) || (randomMove == 2 && number == 0 && playerShouldWin == true) {
             score += 1
-            alertTitle = "You Lose, But Obeyed!"
-            alertMessage = "You still score 1 point."
+        } else if (randomMove == 0 && number == 2 && playerShouldWin == false) || (randomMove == 1 && number == 0 && playerShouldWin == false) || (randomMove == 2 && number == 1 && playerShouldWin == false) {
+            score += 1
         } else {
             score -= 1
-            alertTitle = "You disobeyed the command."
-            alertMessage = "You get -1 point."
         }
         
         if round > 10 {
