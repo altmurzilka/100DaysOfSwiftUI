@@ -10,6 +10,17 @@ import SwiftUI
 
 struct ContentView: View {
     
+    static var defaultWakeTime: Date {
+        var components = DateComponents()
+        components.hour = 7
+        components.minute = 0
+        return Calendar.current.date(from: components) ?? Date()
+    }
+    
+    var bedTime: String {
+           calculateBedtime()
+       }
+    
     @State private var wakeUp = defaultWakeTime
     @State private var sleepAmount = 8.0
     @State private var coffeeAmount = 1
@@ -21,57 +32,38 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             Form {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("When do you want to wake up?")
-                        .font(.headline)
-                    
+                Section(header: Text("When do you want to wake up?").font(.headline)) {  // 1
                     DatePicker("Please enter a time", selection: $wakeUp, displayedComponents: .hourAndMinute)
                         .labelsHidden()
                         .datePickerStyle(WheelDatePickerStyle())
                 }
                 
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Desired amount of sleep")
-                        .font(.headline)
-                    
+                Section(header: Text("Desired amount of sleep").font(.headline)) {
                     Stepper(value: $sleepAmount, in: 4...12, step: 0.25) {
                         Text("\(sleepAmount, specifier: "%g") hours")
                     }
                 }
                 
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Daily coffee intake")
-                        .font(.headline)
-                    
-                    Stepper(value: $coffeeAmount, in: 1...20) {
-                        if coffeeAmount == 1 {
-                            Text("1 cup")
-                        } else {
-                            Text("\(coffeeAmount) cups")
-                        }
-                    }
+                Section(header: Text("Daily coffee intake")
+                    .font(.headline)){
+                        Picker("", selection: $coffeeAmount) { // 2
+                            ForEach(1 ... 10, id: \.self) {
+                                $0 == 1 ? Text("\($0) cup") : Text("\($0) cups")
+                            }
+                        }.labelsHidden()
                 }
-            }
-            .navigationBarTitle("BetterRest")
-            .navigationBarItems(trailing:
-                Button(action: calculateBedtime) {
-                    Text("Calculate")
-                }
-            )
                 .alert(isPresented: $showingAlert) {
                     Alert(title: Text(alertTitle), message: Text(alertMessage), dismissButton: .default(Text("OK")))
-            }
+                }
+                
+                Section(header: Text("Your ideal bedtime is…").font(.headline)) { // 3
+                    Text("\(bedTime)")
+                }
+            }.navigationBarTitle("BetterRest")
         }
     }
     
-    static var defaultWakeTime: Date {
-        var components = DateComponents()
-        components.hour = 7
-        components.minute = 0
-        return Calendar.current.date(from: components) ?? Date()
-    }
-    
-    func calculateBedtime() {
+    func calculateBedtime() -> String {
         let model = SleepCalculator()
         
         let components = Calendar.current.dateComponents([.hour, .minute], from: wakeUp)
@@ -86,14 +78,14 @@ struct ContentView: View {
             let formatter = DateFormatter()
             formatter.timeStyle = .short
             
-            alertMessage = formatter.string(from: sleepTime)
-            alertTitle = "Your ideal bedtime is…"
+            return formatter.string(from: sleepTime)
             
         } catch {
+            showingAlert = true
             alertTitle = "Error"
             alertMessage = "Sorry, there was a problem calculating your bedtime."
+            return ""
         }
-        showingAlert = true
     }
 }
 
