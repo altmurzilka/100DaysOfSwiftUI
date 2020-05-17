@@ -18,6 +18,14 @@ struct ContentView: View {
     @State private var errorMessage = ""
     @State private var showingError = false
     
+    private var score: Int {
+        var count = 0
+        for word in usedWords {
+            count += word.count
+        }
+        return count
+    }
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -29,11 +37,20 @@ struct ContentView: View {
                     Image(systemName: "\($0.count).circle")
                     Text($0)
                 }
+                Text("Your score: \(self.score)")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .multilineTextAlignment(.leading)
+                    .padding()
             }
             .navigationBarTitle(rootWord)
-            .onAppear(perform: startGame)
-            .alert(isPresented: $showingError) {
-                Alert(title: Text(errorTitle), message: Text(errorMessage), dismissButton: .default(Text("OK")))
+                
+                .navigationBarItems(trailing: Button("Restart") {  // 2
+                    self.startGame()
+                })
+                .onAppear(perform: startGame)
+                .alert(isPresented: $showingError) {
+                    Alert(title: Text(errorTitle), message: Text(errorMessage), dismissButton: .default(Text("OK")))
             }
         }
     }
@@ -50,14 +67,14 @@ struct ContentView: View {
             wordError(title: "Word used already", message: "Be more original")
             return
         }
-
+        
         guard isPossible(word: answer) else {
             wordError(title: "Word not recognized", message: "You can't just make them up, you know!")
             return
         }
-
+        
         guard isReal(word: answer) else {
-            wordError(title: "Word not possible", message: "That isn't a real word.")
+            wordError(title: "Word not possible", message: "That isn't a real word or it's too short")
             return
         }
         
@@ -66,6 +83,7 @@ struct ContentView: View {
     }
     
     func startGame() {
+        usedWords.removeAll()
         // 1. Find the URL for start.txt in our app bundle
         if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
             // 2. Load start.txt into a string
@@ -104,9 +122,16 @@ struct ContentView: View {
     }
     
     func isReal(word: String) -> Bool {
+        
+        if word.count < 3 || word == rootWord {  // 1
+            return false
+        }
+        
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
+        
+        
         
         return misspelledRange.location == NSNotFound
     }
