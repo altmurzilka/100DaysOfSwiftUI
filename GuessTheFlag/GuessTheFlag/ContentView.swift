@@ -18,10 +18,12 @@ struct ContentView: View {
     @State private var score = 0  // 1
     @State private var scoreMessage = ""
     
-    @State private var opacity = 1.0
+    @State private var opacities: [Double] = [1, 1, 1]
     
     @State private var popIn = false
     @State private var popOut = false
+    
+    @State private var rotation = 0.0
     
     struct FlagImage: View { // day 24 
         var text: String
@@ -54,15 +56,16 @@ struct ContentView: View {
                             .padding()
                     }
                 }
-                ForEach(0..<3) { number in
+                ForEach(0..<3, id: \.self) { number in
                     Button(action: {
-                        withAnimation {
-                            self.opacity -= 0.2
-                        }
                         self.flagTapped(number)
+                        
                     }) {
                         FlagImage(text: self.countries[number])
                     }
+                    .opacity(self.opacities[number])
+                    .rotation3DEffect(.degrees(number == self.correctAnswer ? self.rotation : 0),
+                                      axis: (x: 0, y: 1, z: 0))
                 }
                 
                 Spacer()
@@ -87,10 +90,21 @@ struct ContentView: View {
         }
     }
     func flagTapped(_ number: Int) {
+        
+        for i in 0..<3 where i != correctAnswer {  // day 34 challenge 2
+            opacities[i] = 0.3
+        }
+        
         if number == correctAnswer {
             scoreTitle = "Correct"
             score += 1
             scoreMessage = "Your score is: \(score)"
+            rotation = 0.0
+            
+            withAnimation(.interpolatingSpring(stiffness: 50, damping: 5)) {
+                self.rotation = 360 // day 34 challenge 1
+            }
+            
         } else {
             scoreTitle = "Wrong"
             score -= 1
@@ -102,6 +116,7 @@ struct ContentView: View {
     func askQuestion() {
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        self.opacities = [1, 1, 1]
     }
 }
 
