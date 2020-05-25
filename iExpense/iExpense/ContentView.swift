@@ -32,7 +32,6 @@ class Expenses: ObservableObject {
                 return
             }
         }
-        
         self.items = []
     }
 }
@@ -43,7 +42,6 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            
             List {
                 ForEach(expenses.items) { item in
                     HStack {
@@ -52,9 +50,10 @@ struct ContentView: View {
                                 .font(.headline)
                             Text(item.type)
                         }
-                        
                         Spacer()
+                        
                         Text("$\(item.amount)")
+                            .foregroundColor(self.color(forAmount: item.amount)) // d37 ch2
                     }
                 }
                 .onDelete(perform: removeItems)
@@ -76,6 +75,17 @@ struct ContentView: View {
     }
     func removeItems(at offsets: IndexSet) {
         expenses.items.remove(atOffsets: offsets)
+    }
+    
+    func color(forAmount amount: Int) -> Color {
+        switch amount {
+        case Int.zero..<10:
+            return .gray
+        case 10..<100:
+            return .green
+        default:
+            return .red
+        }
     }
 }
 
