@@ -32,7 +32,7 @@ class Expenses: ObservableObject {
                 return
             }
         }
-
+        
         self.items = []
     }
 }
@@ -43,6 +43,7 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
+            
             List {
                 ForEach(expenses.items) { item in
                     HStack {
@@ -51,7 +52,7 @@ struct ContentView: View {
                                 .font(.headline)
                             Text(item.type)
                         }
-
+                        
                         Spacer()
                         Text("$\(item.amount)")
                     }
@@ -59,11 +60,14 @@ struct ContentView: View {
                 .onDelete(perform: removeItems)
             }
             .navigationBarTitle("iExpense")
-            .navigationBarItems(trailing:
-                Button(action: {
-                    self.showingAddExpense = true
-                }) {
-                    Image(systemName: "plus")
+            .navigationBarItems(leading:
+                HStack {  // d 38 challenge 1
+                    EditButton()
+                }, trailing:
+                HStack {
+                    Button(action: { self.showingAddExpense = true }) {
+                        Image(systemName: "plus")
+                    }
                 }
             ).sheet(isPresented: $showingAddExpense) {
                 AddView(expenses: self.expenses)
