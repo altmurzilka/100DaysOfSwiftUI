@@ -14,9 +14,10 @@ struct AddView: View {
     @State private var name = ""
     @State private var type = "Personal"
     @State private var amount = ""
-
+    @State private var showAlert = false
+    
     static let types = ["Business", "Personal"]
-
+    
     var body: some View {
         NavigationView {
             Form {
@@ -36,8 +37,13 @@ struct AddView: View {
                     let item = ExpenseItem(name: self.name, type: self.type, amount: actualAmount)
                     self.expenses.items.append(item)
                     self.presentationMode.wrappedValue.dismiss()
+                } else if self.amount.isInt != true {
+                    self.showAlert = true
                 }
-            })
+            }.alert(isPresented: $showAlert) {
+                Alert(title: Text("Error!"), message: Text("Amount field need to contain numbers only!"), dismissButton: .default(Text("OK"))) // challenge 3 day 37
+            }
+            )
         }
     }
 }
@@ -45,5 +51,11 @@ struct AddView: View {
 struct AddView_Previews: PreviewProvider {
     static var previews: some View {
         AddView(expenses: Expenses())
+    }
+}
+
+extension String {
+    var isInt: Bool {
+        return Int(self) != nil
     }
 }
