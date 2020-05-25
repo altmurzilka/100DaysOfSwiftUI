@@ -37,6 +37,7 @@ class Expenses: ObservableObject {
 }
 
 struct ContentView: View {
+    @Environment(\.presentationMode) var presentation // Add button doesn't clikking 2nd time error fixation
     @ObservedObject var expenses = Expenses()
     @State private var showingAddExpense = false
     
