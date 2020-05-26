@@ -17,6 +17,7 @@
 		F19958D0247C90C50089921C /* astronauts.json in Resources */ = {isa = PBXBuildFile; fileRef = F19958CF247C90C40089921C /* astronauts.json */; };
 		F19958D2247C91250089921C /* Astronaut.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19958D1247C91250089921C /* Astronaut.swift */; };
 		F19958D4247C91BE0089921C /* Bundle-Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19958D3247C91BE0089921C /* Bundle-Decodable.swift */; };
+		F19958D6247C93DD0089921C /* Mission.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19958D5247C93DD0089921C /* Mission.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		F19958CF247C90C40089921C /* astronauts.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = astronauts.json; sourceTree = "<group>"; };
 		F19958D1247C91250089921C /* Astronaut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Astronaut.swift; sourceTree = "<group>"; };
 		F19958D3247C91BE0089921C /* Bundle-Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle-Decodable.swift"; sourceTree = "<group>"; };
+		F19958D5247C93DD0089921C /* Mission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mission.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +73,7 @@
 				F19958D1247C91250089921C /* Astronaut.swift */,
 				F19958D3247C91BE0089921C /* Bundle-Decodable.swift */,
 				F19958BD247C80E60089921C /* ContentView.swift */,
+				F19958D5247C93DD0089921C /* Mission.swift */,
 				F19958BF247C80E80089921C /* Assets.xcassets */,
 				F19958C4247C80E80089921C /* LaunchScreen.storyboard */,
 				F19958C7247C80E80089921C /* Info.plist */,
@@ -160,6 +163,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F19958D6247C93DD0089921C /* Mission.swift in Sources */,
 				F19958BA247C80E60089921C /* AppDelegate.swift in Sources */,
 				F19958BC247C80E60089921C /* SceneDelegate.swift in Sources */,
 				F19958D4247C91BE0089921C /* Bundle-Decodable.swift in Sources */,
