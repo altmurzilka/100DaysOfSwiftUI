@@ -27,11 +27,14 @@ struct MissionView: View {
                         .frame(maxWidth: geometry.size.width * 0.7)
                         .padding(.top)
                     
+                    Text(self.mission.formattedLaunchDate) // day 42 challenge 1
+                        .padding()
+                    
                     Text(self.mission.description)
                         .padding()
                     
                     ForEach(self.astronauts, id: \.role) { crewMember in
-                        NavigationLink(destination: AstronautView(astronaut: crewMember.astronaut)) {
+                        NavigationLink(destination: AstronautView(astronaut: crewMember.astronaut, missions: [Mission]())) {
                             
                             HStack {
                                 Image(crewMember.astronaut.id)
