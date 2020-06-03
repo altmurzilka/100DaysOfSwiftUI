@@ -31,7 +31,8 @@ struct AstronautView: View {
                         HStack {
                             Image("\(mission.image)")
                                 .resizable()
-                                .frame(width: 60, height: 60)
+                                .scaledToFit()
+                                .frame(maxWidth: geometry.size.width * 0.1)
                             Text("\(mission.displayName)")
                         }.padding(.horizontal)
                             .accessibilityElement(children: .combine)
