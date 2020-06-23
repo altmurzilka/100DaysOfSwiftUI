@@ -8,48 +8,34 @@
 
 import SwiftUI
 
-class Expenses: ObservableObject {
-    @Published var items = [Habbits]() {
-        didSet {
-            let encoder = JSONEncoder()
-            if let encoded = try? encoder.encode(items) {
-                UserDefaults.standard.set(encoded, forKey: "Items")
-            }
-        }
-    }
-    init() {
-        if let items = UserDefaults.standard.data(forKey: "Items") {
-            let decoder = JSONDecoder()
-            if let decoded = try? decoder.decode([Habbits].self, from: items) {
-                self.items = decoded
-                return
-            }
-        }
-        self.items = []
-    }
-}
-
 struct ContentView: View {
+    
     @Environment(\.presentationMode) var presentation // Add button doesn't clikking 2nd time error fixation
-    @ObservedObject var expenses = Expenses()
+    
+    @ObservedObject var habits = Habbits()
+    
     @State private var showingAddHabbit = false
+    
     var body: some View {
         NavigationView {
             List {
-                ForEach(expenses.items) { item in
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text(item.name)
-                                .font(.headline)
-                            Text(item.description)
-                                .font(.subheadline)
+                ForEach(habits.items) { item in
+                    NavigationLink(destination: DetailView(habits: self.habits, habit: item )) {
+                        HStack {
+                            VStack(alignment: .leading) {
+                                Text(item.name)
+                                    .font(.headline)
+                                Text(item.description)
+                                    .font(.subheadline)
+                            }
+                            Spacer()
+                            Text("\(item.cnts)")
                         }
-                        Spacer()
                     }
                 }
                 .onDelete(perform: removeItems)
             }
-            .navigationBarTitle("iExpense")
+            .navigationBarTitle("Habit Tracker")
             .navigationBarItems(leading:
                 HStack {  
                     EditButton()
@@ -60,17 +46,11 @@ struct ContentView: View {
                     }
                 }
             ).sheet(isPresented: $showingAddHabbit) {
-                AddView(expenses: self.expenses)
+                AddView(habits: self.habits)
             }
         }
     }
     func removeItems(at offsets: IndexSet) {
-        expenses.items.remove(atOffsets: offsets)
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+        habits.items.remove(atOffsets: offsets)
     }
 }

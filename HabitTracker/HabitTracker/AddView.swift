@@ -9,8 +9,11 @@
 import SwiftUI
 
 struct AddView: View {
+    
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var expenses: Expenses
+    
+    @ObservedObject var habits: Habbits
+    
     @State private var name = ""
     @State private var description = ""
     
@@ -23,23 +26,11 @@ struct AddView: View {
             .navigationBarTitle("Add new habit")
             .navigationBarItems(trailing: Button("Save") {
                 
-                let item = Habbits(name: self.name, description: self.description)
-                self.expenses.items.append(item)
+                let item = OneHabit(name: self.name, description: self.description, cnts: 0)
+                self.habits.items.append(item)
                 self.presentationMode.wrappedValue.dismiss()
                 }
             )
         }
-    }
-}
-
-struct AddView_Previews: PreviewProvider {
-    static var previews: some View {
-        AddView(expenses: Expenses())
-    }
-}
-
-extension String {
-    var isInt: Bool {
-        return Int(self) != nil
     }
 }
