@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F19761A324A27923001E06EF /* Habit.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19761A224A27923001E06EF /* Habit.swift */; };
+		F19761A524A27B8F001E06EF /* AddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19761A424A27B8F001E06EF /* AddView.swift */; };
 		F1A86A14249E71E9009666D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A86A13249E71E9009666D3 /* AppDelegate.swift */; };
 		F1A86A16249E71E9009666D3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A86A15249E71E9009666D3 /* SceneDelegate.swift */; };
 		F1A86A18249E71E9009666D3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A86A17249E71E9009666D3 /* ContentView.swift */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F19761A224A27923001E06EF /* Habit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Habit.swift; sourceTree = "<group>"; };
+		F19761A424A27B8F001E06EF /* AddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddView.swift; sourceTree = "<group>"; };
 		F1A86A10249E71E9009666D3 /* HabitTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HabitTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1A86A13249E71E9009666D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1A86A15249E71E9009666D3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +63,8 @@
 				F1A86A13249E71E9009666D3 /* AppDelegate.swift */,
 				F1A86A15249E71E9009666D3 /* SceneDelegate.swift */,
 				F1A86A17249E71E9009666D3 /* ContentView.swift */,
+				F19761A424A27B8F001E06EF /* AddView.swift */,
+				F19761A224A27923001E06EF /* Habit.swift */,
 				F1A86A19249E71EC009666D3 /* Assets.xcassets */,
 				F1A86A1E249E71EC009666D3 /* LaunchScreen.storyboard */,
 				F1A86A21249E71EC009666D3 /* Info.plist */,
@@ -148,6 +154,8 @@
 			files = (
 				F1A86A14249E71E9009666D3 /* AppDelegate.swift in Sources */,
 				F1A86A16249E71E9009666D3 /* SceneDelegate.swift in Sources */,
+				F19761A524A27B8F001E06EF /* AddView.swift in Sources */,
+				F19761A324A27923001E06EF /* Habit.swift in Sources */,
 				F1A86A18249E71E9009666D3 /* ContentView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
