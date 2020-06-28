@@ -40,6 +40,11 @@ class Order: ObservableObject, Codable {
             return false
         }
         
+        // challenge 1
+        if name.isAllSpaces || streetAddress.isAllSpaces || city.isAllSpaces || zip.isAllSpaces {
+            return false
+        }
+
         return true
     }
     
@@ -93,5 +98,13 @@ class Order: ObservableObject, Codable {
         try container.encode(streetAddress, forKey: .streetAddress)
         try container.encode(city, forKey: .city)
         try container.encode(zip, forKey: .zip)
+    }
+}
+
+// challenge 1
+private extension String {
+    var isAllSpaces: Bool {
+        guard !self.isEmpty else { return false }
+        return self.drop(while: { $0 == " " }).isEmpty
     }
 }
