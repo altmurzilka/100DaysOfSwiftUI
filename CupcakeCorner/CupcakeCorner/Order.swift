@@ -41,6 +41,7 @@ class Order: ObservableObject, Codable {
         }
         
         // challenge 1
+        // check fiels in AddressView for emptyness
         if name.isAllSpaces || streetAddress.isAllSpaces || city.isAllSpaces || zip.isAllSpaces {
             return false
         }

@@ -14,6 +14,7 @@ struct CheckoutView: View {
     // this related to the TextView
     //   @State private var habitDescription = ""
     @State private var confirmationMessage = ""
+    @State private var alertTitle = ""
     @State private var showingConfirmation = false
     
     var body: some View {
@@ -39,7 +40,7 @@ struct CheckoutView: View {
         }
         .navigationBarTitle("Check out", displayMode: .inline)
         .alert(isPresented: $showingConfirmation) {
-            Alert(title: Text("Thank you!"), message: Text(confirmationMessage), dismissButton: .default(Text("OK")))
+            Alert(title: Text(alertTitle), message: Text(confirmationMessage), dismissButton: .default(Text("OK")))
         }
     }
     func placeOrder() {
@@ -55,10 +56,15 @@ struct CheckoutView: View {
         
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
+                // challenge 2
                 print("No data in response: \(error?.localizedDescription ?? "Unknown error").")
+                self.alertTitle = "Oops!"
+                self.confirmationMessage = "\(error?.localizedDescription ?? "Unknown error")"
+                self.showingConfirmation = true
                 return
             }
             if let decodedOrder = try? JSONDecoder().decode(Order.self, from: data) {
+                self.alertTitle = "Thank you!"
                 self.confirmationMessage = "Your order for \(decodedOrder.quantity)x \(Order.types[decodedOrder.type].lowercased()) cupcakes is on its way!"
                 self.showingConfirmation = true
             } else {
