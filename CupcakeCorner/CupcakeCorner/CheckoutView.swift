@@ -12,7 +12,7 @@ struct CheckoutView: View {
     
     @ObservedObject var order: Order
     // this related to the TextView
-    //   @State private var habitDescription = ""
+    // @State private var habitDescription = ""
     @State private var confirmationMessage = ""
     @State private var alertTitle = ""
     @State private var showingConfirmation = false
@@ -26,7 +26,7 @@ struct CheckoutView: View {
                         .scaledToFit()
                         .frame(width: geo.size.width)
                     
-                    Text("Your total is $\(self.order.cost, specifier: "%.2f")")
+                    Text("Your total is $\(self.order.orderAsStruct.cost, specifier: "%.2f")")
                         .font(.title)
                     // great stuff need to implement somewhere
                     //   TextView(placeholderText: "Description", text: self.$habitDescription).frame(numLines: 15)
@@ -44,7 +44,7 @@ struct CheckoutView: View {
         }
     }
     func placeOrder() {
-        guard let encoded = try? JSONEncoder().encode(order) else {
+        guard let encoded = try? JSONEncoder().encode(order.orderAsStruct) else {
             print("Failed to encode order")
             return
         }
@@ -57,15 +57,19 @@ struct CheckoutView: View {
         URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data else {
                 // challenge 2
+                /*  If our call to placeOrder() fails – for example if there is no internet connection
+                    – show an informative alert for the user. To test this,
+                    just disable WiFi on your Mac so the simulator has no connection either.
+                */
                 print("No data in response: \(error?.localizedDescription ?? "Unknown error").")
                 self.alertTitle = "Oops!"
-                self.confirmationMessage = "\(error?.localizedDescription ?? "Unknown error")"
+                self.confirmationMessage = "Invalid response from server"
                 self.showingConfirmation = true
                 return
             }
-            if let decodedOrder = try? JSONDecoder().decode(Order.self, from: data) {
+            if let decodedOrder = try? JSONDecoder().decode(ClassToStruct.self, from: data) {
                 self.alertTitle = "Thank you!"
-                self.confirmationMessage = "Your order for \(decodedOrder.quantity)x \(Order.types[decodedOrder.type].lowercased()) cupcakes is on its way!"
+                self.confirmationMessage = "Your order for \(decodedOrder.quantity)x \(ClassToStruct.types[decodedOrder.type].lowercased()) cupcakes is on its way!"
                 self.showingConfirmation = true
             } else {
                 print("Invalid response from server")

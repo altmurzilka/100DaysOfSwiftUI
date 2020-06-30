@@ -8,17 +8,36 @@
 
 import Foundation
 
-class Order: ObservableObject, Codable {
-    enum CodingKeys: CodingKey {
-        case type, quantity, extraFrosting, addSprinkles, name, streetAddress, city, zip
-    }
+/*
+ For a more challenging task, see if you can convert our data model from a class to a struct,
+ then create an ObservableObject class wrapper around it that gets passed around.
+ This will result in your class having one @Published property,
+ which is the data struct inside it, and should make supporting Codable on the struct much easier.
+ */
+
+
+// challenge 3
+struct ClassToStruct: Codable {
     
+    // transfer data from Order class to the new struct
     static let types = ["Vanilla", "Strawberry", "Chocolate", "Rainbow"]
+
     
-    @Published var type = 0
-    @Published var quantity = 3
+    // Get rid of all @Published properties that we used in class
+    // @Published is only available on properties of classes
     
-    @Published var specialRequestEnabled = false {
+    var type = 0            // instead of @Published var type = 0
+    var quantity = 3
+    
+    var extraFrosting = false
+    var addSprinkles = false
+    
+    var name = ""
+    var streetAddress = ""
+    var city = ""
+    var zip = ""
+    
+    var specialRequestEnabled = false {
         didSet {
             if specialRequestEnabled == false {
                 extraFrosting = false
@@ -27,25 +46,21 @@ class Order: ObservableObject, Codable {
         }
     }
     
-    @Published var extraFrosting = false
-    @Published var addSprinkles = false
-    
-    @Published var name = ""
-    @Published var streetAddress = ""
-    @Published var city = ""
-    @Published var zip = ""
-    
     var hasValidAddress: Bool {
-        if name.isEmpty || streetAddress.isEmpty || city.isEmpty || zip.isEmpty {
+        // challenge 1
+        
+        /*
+            Our address fields are currently considered valid if they contain anything,
+            even if it’s just only whitespace. Improve the validation to make sure a string of pure whitespace is invalid.
+        */
+        
+        // check fiels in AddressView for emptyness
+        // https://www.hackingwithswift.com/example-code/strings/how-to-trim-whitespace-in-a-string
+        // Note: read something about trimmung and build-in methods
+        if name.isEmpty || streetAddress.trimmingCharacters(in: .whitespaces).isEmpty || city.isEmpty || zip.isEmpty {
             return false
         }
         
-        // challenge 1
-        // check fiels in AddressView for emptyness
-        if name.isAllSpaces || streetAddress.isAllSpaces || city.isAllSpaces || zip.isAllSpaces {
-            return false
-        }
-
         return true
     }
     
@@ -69,43 +84,29 @@ class Order: ObservableObject, Codable {
         return cost
     }
     
-    init() { }
+}
+
+class Order: ObservableObject {         // deleting Codable from class
     
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        type = try container.decode(Int.self, forKey: .type)
-        quantity = try container.decode(Int.self, forKey: .quantity)
-        
-        extraFrosting = try container.decode(Bool.self, forKey: .extraFrosting)
-        addSprinkles = try container.decode(Bool.self, forKey: .addSprinkles)
-        
-        name = try container.decode(String.self, forKey: .name)
-        streetAddress = try container.decode(String.self, forKey: .streetAddress)
-        city = try container.decode(String.self, forKey: .city)
-        zip = try container.decode(String.self, forKey: .zip)
+    @Published var orderAsStruct: ClassToStruct
+    
+    enum CodingKeys: CodingKey {
+        case orderAsStruct  // adding cases only for @Published variables
+    }
+    
+    init() {
+        self.orderAsStruct = ClassToStruct()
     }
     
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         
-        try container.encode(type, forKey: .type)
-        try container.encode(quantity, forKey: .quantity)
-        
-        try container.encode(extraFrosting, forKey: .extraFrosting)
-        try container.encode(addSprinkles, forKey: .addSprinkles)
-        
-        try container.encode(name, forKey: .name)
-        try container.encode(streetAddress, forKey: .streetAddress)
-        try container.encode(city, forKey: .city)
-        try container.encode(zip, forKey: .zip)
+        try container.encode(orderAsStruct, forKey: .orderAsStruct)
     }
-}
-
-// challenge 1
-private extension String {
-    var isAllSpaces: Bool {
-        guard !self.isEmpty else { return false }
-        return self.drop(while: { $0 == " " }).isEmpty
+    
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        orderAsStruct = try container.decode(ClassToStruct.self, forKey: .orderAsStruct)
     }
 }

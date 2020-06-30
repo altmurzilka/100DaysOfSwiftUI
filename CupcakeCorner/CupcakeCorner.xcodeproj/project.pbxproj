@@ -17,6 +17,7 @@
 		F1BADEC824A2B96700F9CFF2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1BADEC724A2B96700F9CFF2 /* Assets.xcassets */; };
 		F1BADECB24A2B96700F9CFF2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1BADECA24A2B96700F9CFF2 /* Preview Assets.xcassets */; };
 		F1BADECE24A2B96700F9CFF2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1BADECC24A2B96700F9CFF2 /* LaunchScreen.storyboard */; };
+		F1F3A08624ABA871008EB6BD /* OrderAsClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1F3A08524ABA871008EB6BD /* OrderAsClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		F1BADECA24A2B96700F9CFF2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		F1BADECD24A2B96700F9CFF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F1BADECF24A2B96700F9CFF2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F1F3A08524ABA871008EB6BD /* OrderAsClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderAsClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				F1B6F45924A3F6590043AD69 /* CheckoutView.swift */,
 				F1B6F45B24A403E40043AD69 /* TextView.swift */,
 				F1B6F45524A3EE540043AD69 /* Order.swift */,
+				F1F3A08524ABA871008EB6BD /* OrderAsClass.swift */,
 				F1B6F45724A3F5220043AD69 /* AddressView.swift */,
 				F1BADEC724A2B96700F9CFF2 /* Assets.xcassets */,
 				F1BADECC24A2B96700F9CFF2 /* LaunchScreen.storyboard */,
@@ -161,6 +164,7 @@
 				F1BADEC224A2B96200F9CFF2 /* AppDelegate.swift in Sources */,
 				F1BADEC424A2B96200F9CFF2 /* SceneDelegate.swift in Sources */,
 				F1B6F45A24A3F6590043AD69 /* CheckoutView.swift in Sources */,
+				F1F3A08624ABA871008EB6BD /* OrderAsClass.swift in Sources */,
 				F1B6F45C24A403E40043AD69 /* TextView.swift in Sources */,
 				F1B6F45624A3EE540043AD69 /* Order.swift in Sources */,
 				F1BADEC624A2B96200F9CFF2 /* ContentView.swift in Sources */,
