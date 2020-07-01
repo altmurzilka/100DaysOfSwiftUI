@@ -2,7 +2,7 @@
 //  AddView.swift
 //  iExpense
 //
-//  Created by алтынпончик on 5/24/20.
+//  Created by алтынпончик on 7/2/20.
 //  Copyright © 2020 алтынпончик. All rights reserved.
 //
 
@@ -42,7 +42,7 @@ struct AddView: View {
                 }
             }.alert(isPresented: $showAlert) {
                 Alert(title: Text("Error!"), message: Text("Amount field need to contain numbers only!"), dismissButton: .default(Text("OK"))) // challenge 3 day 37
-            }
+                }
             )
         }
     }
