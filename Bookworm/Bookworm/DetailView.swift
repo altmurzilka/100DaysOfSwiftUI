@@ -17,7 +17,7 @@ struct DetailView: View {
                 ZStack(alignment: .bottomTrailing) {
                     Image(self.book.genre ?? "Fantasy")
                         .frame(maxWidth: geometry.size.width)
-
+                    
                     Text(self.book.genre?.uppercased() ?? "FANTASY")
                         .font(.caption)
                         .fontWeight(.black)
@@ -30,13 +30,18 @@ struct DetailView: View {
                 Text(self.book.author ?? "Unknown author")
                     .font(.title)
                     .foregroundColor(.secondary)
-
+                
                 Text(self.book.review ?? "No review")
                     .padding()
-
+                
                 RatingView(rating: .constant(Int(self.book.rating)))
                     .font(.largeTitle)
-
+                
+                
+                //challenge 3
+                Text(self.book.date?.toString() ?? "no date")
+                    .padding()
+                
                 Spacer()
             }
         }
@@ -53,7 +58,7 @@ struct DetailView_Previews: PreviewProvider {
         book.genre = "Fantasy"
         book.rating = 4
         book.review = "This was a great book; I really enjoyed it."
-
+        
         return NavigationView {
             DetailView(book: book)
         }
