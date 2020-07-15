@@ -8,6 +8,13 @@
 import CoreData
 import SwiftUI
 
+enum Predicates: String {
+    case beginsWith = "BEGINSWITH"
+    case contains = "CONTAINS"
+    case beginsWithIgnoreCase = "BEGINSWITH[c]"
+    case containsIgnoreCase = "CONTAINS[c]"
+}
+
 struct FilteredList<T: NSManagedObject, Content: View>: View {
     var fetchRequest: FetchRequest<T>
     var singers: FetchedResults<T> { fetchRequest.wrappedValue }
